@@ -3,7 +3,7 @@ A <- 7
 B <- 12
 C <- 5
 D <- A+B+C
-AVG <- D/3
+AVG <- D/3 
 AVG
 
 
