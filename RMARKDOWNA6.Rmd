@@ -1,0 +1,90 @@
+---
+title: "CLUSTERING"
+output: html_document
+date: "2024-05-31"
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+---{r}
+
+
+library(ggplot2)
+
+all <- read.csv(file.choose())#open CreditCard.csv 
+
+head(all)
+
+qplot(data=all, x=dependents, y=months) # kind of Obvious!!! 
+
+convertto a matrix as clustering works better on a matrix 
+
+mat <-cbind(all$dependents, all$months)
+
+head(mat) kmeans(mat,centers=3) #All that output!!! 
+
+ lets draw it
+
+km=kmeans(mat,centers=3)$cluster 
+
+-- vector of cluster belonging 
+
+all$cl <-factor( km)
+
+head(all) 
+
+summary(all)
+
+qplot(data=all,x=dependents,y=months, color=cl)
+
+---
+
+<img src="C:\Users\sai kiran\Desktop\c1 bda\Rplot.png" width="400"/>
+<img src="C:\Users\sai kiran\Desktop\c1 bda\Rplot01.png"width="400"/>
+
+
+---{r}
+
+all <- read.csv(file.choose()) #open CreditCard.csv
+
+head(all)
+
+install.packages("plot3D")
+
+library("plot3D")
+
+scatter3D(all$dependents,all$months,all$active)
+
+mat <- cbind(all$dependents, all$months, all$active , col=NULL)
+
+head(mat)
+
+wss <- rep(0,15) # remember this!
+
+wss
+
+for (k in 1:15)
+
+  wss[k] <- sum( kmeans(mat,centers=k, nstart=50)$withinss)
+
+wss
+
+plot(wss, type="b") # see the ELBOW at index = 3, so 3 clusters is best
+
+kmeans(mat,centers=3) # divide into 3 groups lets draw it
+
+km = kmeans(mat,centers=3)$cluster # vector of cluster belonging
+
+all$cl <- km
+
+scatter3D(all$dependents,all$months,all$active, colvar=all$cl)
+
+
+---
+## 3D PLOTS
+
+<img src="C:\Users\sai kiran\Desktop\c1 bda\Rplot02.png"width="400"/>
+<img src="C:\Users\sai kiran\Desktop\c1 bda\Rplot03.png"width="400"/>
+<img src="C:\Users\sai kiran\Desktop\c1 bda\Rplot04.png"width="400"/>
+
